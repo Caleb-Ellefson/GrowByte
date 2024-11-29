@@ -1,5 +1,5 @@
-import Device from "../models/Device.js"; // Device model
-import SensorData from "../models/SensorData.js"; // Sensor data model
+import Device from "../models/deviceModel.js"; // Device model
+import SensorData from "../models/sensorModel.js"; // Sensor data model
 import { NotFoundError } from "../errors/customErrors.js"; // Custom error handling
 
 // Get all devices for the logged-in user
