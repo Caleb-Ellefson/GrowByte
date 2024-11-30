@@ -2,11 +2,15 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import styled from 'styled-components';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import photo1 from '../assets/photo1.jpg';
+import photo2 from '../assets/photo2.jpg';
+import photo3 from '../assets/photo3.jpg';
+
 
 const images = [
-  './assets/photo1.jpg',
-  './assets/photo2.jpg',
-  './assets/photo3.jpg', // Replace with your actual image paths
+  photo1,
+  photo2,
+  photo3,
 ];
 
 const ImageCarousel = () => {

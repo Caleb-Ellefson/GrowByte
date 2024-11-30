@@ -1,13 +1,20 @@
-import { Router } from "express";
-const router = Router()
-import {login, logout, register} from '../controllers/authContoller.js'
+import { Router } from 'express';
+const router = Router();
 
-//Validation layer
+import { login, logout, register } from '../controllers/authController.js';
+import { authenticateUser } from '../middleware/authMiddleware.js';
+import {
+  validateLoginInput,
+  validateRegisterInput,
+} from '../middleware/validationMiddleware.js';
 
-import { validateLoginInput, validateRegisterInput } from "../middleware/validationMiddleware.js";
+// User registration
+router.post('/register', validateRegisterInput, register);
 
-router.post('/register',validateRegisterInput, register)
-router.post('/login',validateLoginInput, login)
-router.get('/logout', logout )
+// User login
+router.post('/login', validateLoginInput, login);
 
-export default router
+// User logout (requires authentication)
+router.get('/logout', authenticateUser, logout);
+
+export default router;
