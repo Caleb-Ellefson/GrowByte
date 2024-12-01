@@ -55,7 +55,7 @@ const Nav = styled.nav`
 
   .login-btn {
     text-decoration: none;
-    background-color: var(--brown); /* Brown */
+    background-color: var(--primary-500); /* Brown */
     color: var(--cream); /* Cream */
     font-size: 1rem;
     font-weight: bold;

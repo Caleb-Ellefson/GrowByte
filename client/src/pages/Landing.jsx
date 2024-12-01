@@ -99,83 +99,146 @@ const Landing = () => {
         </div>
         <img src={image1} alt="Plants monitoring" className="main-img" />
       </div>
+  <div class="container_1">
+    <div class="content">
+      <svg id="more-arrows">
+        <polygon class="arrow-top" points="37.6,27.9 1.8,1.3 3.3,0 37.6,25.3 71.9,0 73.7,1.3 "/>
+        <polygon class="arrow-middle" points="37.6,45.8 0.8,18.7 4.4,16.4 37.6,41.2 71.2,16.4 74.5,18.7 "/>
+        <polygon class="arrow-bottom" points="37.6,64 0,36.1 5.1,32.8 37.6,56.8 70.4,32.8 75.5,36.1 "/>
+      </svg>
+    </div>
+  </div>
+
     </Wrapper>
+
+
   );
 };
 
 const Wrapper = styled.section`
-  /* Add new font-family */
-  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+
 
   nav {
-    width: 100vw; /* Equivalent to var(--fluid-width) */
+    width: 100vw;
     margin: 0 auto;
-    height: 4rem; /* Equivalent to var(--nav-height) */
+    height: 4rem;
     display: flex;
     align-items: center;
   }
+
   .page {
-    min-height: calc(100vh - 6rem); /* Adjust for navbar height */
+    min-height: calc(100vh - 6rem);
     display: grid;
     align-items: center;
     margin-top: -3rem;
   }
+
   h1 {
-    font-family: 'Lora', serif; /* New font-family */
+    font-family: 'Lora', serif;
     font-weight: 700;
-    font-size: 3rem; /* Increase size for better emphasis */
-    color: #FFFFFF; /* Ensure h1 uses consistent text color */
+    font-size: 3rem;
+    color: #FFFFFF;
     span {
-      color: #57B894; /* Your primary color */
+      color: #57B894;
     }
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
+
   p {
-    font-family: 'Lora', serif; /* Consistent font-family */
+    font-family: 'Lora', serif;
     font-weight: 400;
-    line-height: 1.8; /* Adjust line-height for better readability */
-    font-size: 1.5rem; /* Increased size for better legibility */
-    color: #FFFFFF; /* Secondary text color */
+    line-height: 1.8;
+    font-size: 1.5rem;
+    color: #FFFFFF;
     margin-bottom: 1rem;
     max-width: 35em;
   }
+
   .register-link {
     margin-right: 1rem;
   }
+
   .main-img {
     display: none;
   }
+
   .btn {
-    font-family: 'Lora', serif; /* Consistent font-family */
-    font-size: 1.2rem; /* Slightly larger font for buttons */
-    padding: 0.75rem 1.5rem; /* Adjust padding for proportional button size */
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 5px;
-    background-color: var(--brown); /* Your primary button color */
-    color: var(--cream); /* Button text color */
+    background-color: var(--primary-500);
+    color: var(--cream);
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
   }
 
-
   .btn:hover {
-    background-color: var(--beige); /* Slightly lighter color */
-    transform: translateY(-2px); /* Subtle hover effect */
+    background-color: var(--beige);
+    transform: translateY(-2px);
   }
+
+  .container_1 {
+    position: fixed; /* Fixes the container to the bottom of the viewport */
+    bottom: 20px; /* Adds spacing from the bottom edge */
+    left: 50%; /* Centers it horizontally */
+    transform: translateX(-50%); /* Adjusts for centering */
+    text-align: center;
+    z-index: 100;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #more-arrows {
+    width: 75px;
+    height: 65px;
+  }
+
+  #more-arrows:hover polygon {
+    fill: #FFF;
+    transition: all 0.2s ease-out;
+  }
+
+  #more-arrows:hover polygon.arrow-bottom {
+    transform: translateY(-18px);
+  }
+
+  #more-arrows:hover polygon.arrow-top {
+    transform: translateY(18px);
+  }
+
+  polygon {
+    fill: #FFF;
+    transition: all 0.2s ease-out;
+  }
+
+  polygon.arrow-middle {
+    opacity: 0.75;
+  }
+
+  polygon.arrow-top {
+    opacity: 0.5;
+  }
+
   @media (min-width: 992px) {
     .page {
       grid-template-columns: 1fr 400px;
       column-gap: 3rem;
     }
+
     .main-img {
       display: block;
       max-width: 100%;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for a polished look */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
   }
 `;
-
 
 export default Landing;

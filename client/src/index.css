@@ -1,7 +1,7 @@
 @import url('https://fonts.cdnfonts.com/css/counter-strike');
 @import 'react-responsive-carousel/lib/styles/carousel.min.css';
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
 
 
 * {
@@ -237,10 +237,14 @@ ul {
 }
 .form-label {
   display: block;
-  font-size: var(--smallText);
+  font-size: 18px;
+  color: black;
   margin-bottom: 0.5rem;
   text-transform: capitalize;
-  letter-spacing: var(--letterSpacing);
+  font-family: 'Lora', serif; /* Consistent font-family */
+  font-weight: 500;
+  line-height: 1; /* Adjust line-height for better readability */
+
 
 }
 .form-input,

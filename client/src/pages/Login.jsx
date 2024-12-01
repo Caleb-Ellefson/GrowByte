@@ -1,49 +1,44 @@
-
 import { FormRow, SubmitBtn, NavBar } from '../components/Index.js';
-import { Link, Form, redirect, Outlet, } from 'react-router-dom';
+import { Link, Form, redirect } from 'react-router-dom';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-
 export const action =
   (queryClient) =>
   async ({ request }) => {
-    //Grab the data from the form
+    // Grab the data from the form
     const formData = await request.formData();
-    //Convert data to object
+    // Convert data to object
     const data = Object.fromEntries(formData);
     try {
-      //Login route using data from form
+      // Login route using data from form
       await customFetch.post('/auth/login', data);
 
-      // queryClient.invalidateQueries();
       toast.success('Login successful');
       return redirect('/');
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error(error?.response?.data);
       return error;
     }
   };
 
 const Login = () => {
-  
-
   return (
     <Wrapper>
-      <div className='grid-item'>
+      <div className="grid-item">
         <NavBar />
       </div>
-      <div className='grid-item'>
-        <Form method='post' className='form'>
+      <div className="grid-item">
+        <Form method="post" className="form">
           <h4>Login</h4>
-          <FormRow type='email' name='email' />
-          <FormRow type='password' name='password' />
+          <FormRow type="email" name="email" />
+          <FormRow type="password" name="password" />
           <SubmitBtn />
           <p>
             Not a member yet?
-            <Link to='/register' className='member-btn'>
+            <Link to="/register" className="member-btn">
               Register
             </Link>
           </p>
@@ -54,44 +49,72 @@ const Login = () => {
 };
 
 const Wrapper = styled.section`
-background: linear-gradient(#3c4c5a, #0a1924);
-min-height: 100vh;
-display: grid;
-align-items: center;
-grid-template-rows: 20% 80%;
-.logo {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 1.38rem;
-}
-.form {
-    display:grid;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+
+  .form {
+    display: grid;
     align-items: center;
-    margin-bottom: 175px;
+    margin: 0 auto;
     max-width: 400px;
-    border-top: 5px solid var(--primary-500);
+    padding: 2rem;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: var(--shadow-3); /* Add shadow for depth */
+    border-top: 5px solid var(--primary-500); /* Accent border */
+  }
 
-}
-
-.grid-item{
-  display: grid;
-}
-h4 {
+  h4 {
     text-align: center;
-    margin-bottom: 1.38rem;
-}
-p {
+    font-family: 'Lora', serif; /* Consistent font */
+    font-size: 1.8rem; /* Slightly larger heading */
+    color: black; /* Brown text color */
+    margin-bottom: 1.5rem;
+  }
+
+  p {
     margin-top: 1rem;
     text-align: center;
     line-height: 1.5;
-}
-.btn {
+    font-family: 'Lora', serif; /* Match font style */
+    color: black; /* Text color for p */
+  }
+
+  .btn {
     margin-top: 1rem;
-}
-.member-btn {
-    color: var(--primary-500);
-    letter-spacing: var(--letter-spacing);
+    background-color: var(--primary-500); /* Primary button color */
+    color: var(--cream); /* Button text color */
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px; /* Rounded button */
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn:hover {
+    background-color: var(--beige); /* Slightly lighter hover effect */
+    transform: translateY(-2px); /* Subtle lift */
+  }
+
+  .member-btn {
+    color: var(--brown); /* Link color */
+    letter-spacing: var(--letterSpacing);
     margin-left: 0.25rem;
-}
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .member-btn:hover {
+    color: var(--beige); /* Lighter hover effect for link */
+  }
+
+  .grid-item {
+    display: grid;
+  }
 `;
-export default Login
+
+
+export default Login;

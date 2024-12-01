@@ -24,7 +24,7 @@ const Register = () => {
     <Wrapper>
         <NavBar />
       <Form method='post' className='form'>
-        <h4>Register</h4>
+        <h2>Register</h2>
         <FormRow type='text' name='name' />
         <FormRow type='email' name='email' />
         <FormRow type='password' name='password' />
@@ -42,7 +42,6 @@ const Register = () => {
 
 
 const Wrapper = styled.section`
-background: linear-gradient(#3c4c5a, #0a1924);
 min-height: 100vh;
 display: grid;
 align-items: center;
@@ -56,14 +55,17 @@ align-items: center;
     border-top: 5px solid var(--primary-500);
     margin-bottom: 175px;
 }
-h4 {
+h2 {
     text-align: center;
     margin-bottom: 1.38rem;
+    color: black;
+    font-family: 'Lora', serif; 
 }
 p {
     margin-top: 1rem;
     text-align: center;
     line-height: 1.5;
+    color: black;
 }
 .btn {
     margin-top: 1rem;
