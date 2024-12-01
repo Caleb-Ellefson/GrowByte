@@ -1,30 +1,35 @@
-import { Router } from 'express';
-import {
-  validateDeviceInput,
-  validateSensorDataInput,
-} from '../middleware/validationMiddleware.js';
-
+import express from "express";
 import {
   getDevices,
   createDevice,
   getDevice,
   updateDevice,
   deleteDevice,
-  addSensorData,
-  getSensorData,
-} from '../controllers/deviceController.js';
+  reportSensorData,
+  getDeviceHistory,
+} from "../controllers/deviceController.js";
 
-const router = Router();
+const router = express.Router();
 
-router.route('/').post(validateDeviceInput, createDevice).get(getDevices);
-router
-  .route('/:id')
-  .get(getDevice)
-  .patch(validateDeviceInput, updateDevice)
-  .delete(deleteDevice);
-router
-  .route('/:id/data')
-  .post(validateSensorDataInput, addSensorData)
-  .get(getSensorData);
+// Get all devices for the logged-in user
+router.get("/", getDevices);
+
+// Create a new device
+router.post("/", createDevice);
+
+// Get a single device by ID
+router.get("/:id", getDevice);
+
+// Update a device by ID
+router.patch("/:id", updateDevice);
+
+// Delete a device by ID
+router.delete("/:id", deleteDevice);
+
+// Report sensor data for a specific device (ESP32C6 data)
+router.post("/:id/report", reportSensorData);
+
+// Get historical sensor data for a specific device
+router.get("/:id/history", getDeviceHistory);
 
 export default router;

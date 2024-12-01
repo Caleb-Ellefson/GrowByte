@@ -1,13 +1,12 @@
-import Device from "../models/deviceModel.js"; // Device model
-import SensorData from "../models/sensorModel.js"; // Sensor data model
-import { NotFoundError } from "../errors/customErrors.js"; // Custom error handling
+import Device from "../models/deviceModel.js";
+import { NotFoundError } from "../errors/customErrors.js";
 
-// Get all devices for the logged-in user
+// Get all devices
 export const getDevices = async (req, res) => {
   const devices = await Device.find({ user: req.user.userId });
 
   if (!devices.length) {
-    throw new NotFoundError('No devices found.');
+    throw new NotFoundError("No devices found.");
   }
 
   res.status(200).json({ devices });
@@ -15,17 +14,13 @@ export const getDevices = async (req, res) => {
 
 // Create a new device
 export const createDevice = async (req, res) => {
-  req.body.user = req.user.userId; // Attach the user ID to the device
+  req.body.user = req.user.userId;
   const device = await Device.create(req.body);
-
-  if (!device) {
-    throw new NotFoundError('Could not create device.');
-  }
 
   res.status(201).json({ device });
 };
 
-// Get a single device by ID
+// Get a single device
 export const getDevice = async (req, res) => {
   const device = await Device.findOne({
     _id: req.params.id,
@@ -41,16 +36,14 @@ export const getDevice = async (req, res) => {
 
 // Update a device
 export const updateDevice = async (req, res) => {
-  const { id } = req.params;
-
   const updatedDevice = await Device.findOneAndUpdate(
-    { _id: id, user: req.user.userId },
+    { _id: req.params.id, user: req.user.userId },
     req.body,
     { new: true, runValidators: true }
   );
 
   if (!updatedDevice) {
-    throw new NotFoundError(`No device found with ID ${id}.`);
+    throw new NotFoundError(`No device found with ID ${req.params.id}.`);
   }
 
   res.status(200).json({ updatedDevice });
@@ -58,50 +51,56 @@ export const updateDevice = async (req, res) => {
 
 // Delete a device
 export const deleteDevice = async (req, res) => {
-  const { id } = req.params;
-
-  const removedDevice = await Device.findOneAndDelete({
-    _id: id,
+  const deletedDevice = await Device.findOneAndDelete({
+    _id: req.params.id,
     user: req.user.userId,
   });
 
-  if (!removedDevice) {
-    throw new NotFoundError(`No device found with ID ${id}.`);
+  if (!deletedDevice) {
+    throw new NotFoundError(`No device found with ID ${req.params.id}.`);
   }
 
-  res.status(200).json({ msg: `Device with ID ${id} deleted.` });
+  res.status(200).json({ msg: `Device with ID ${req.params.id} deleted.` });
 };
 
-// Add sensor data for a device
-export const addSensorData = async (req, res) => {
+// Report sensor data
+export const reportSensorData = async (req, res) => {
   const { id } = req.params;
+  const { hydration, temperature, light } = req.body;
 
-  // Ensure the device exists and belongs to the logged-in user
+  // Ensure required fields are provided
+  if (hydration === undefined || temperature === undefined || light === undefined) {
+    return res.status(400).json({ error: "All sensor values are required." });
+  }
+
   const device = await Device.findOne({ _id: id, user: req.user.userId });
+
   if (!device) {
     throw new NotFoundError(`No device found with ID ${id}.`);
   }
 
-  // Add new sensor data
-  const data = await SensorData.create({
-    device: id,
-    moistureLevel: req.body.moistureLevel,
-  });
+  // Add new sensor data to history
+  device.dataHistory.push({ hydration, temperature, light });
 
-  res.status(201).json({ data });
+  // Update current readings
+  device.hydration = hydration;
+  device.temperature = temperature;
+  device.light = light;
+
+  await device.save();
+
+  res.status(200).json({ device });
 };
 
-// Get historical sensor data for a device
-export const getSensorData = async (req, res) => {
+// Get historical data
+export const getDeviceHistory = async (req, res) => {
   const { id } = req.params;
 
-  // Ensure the device exists and belongs to the logged-in user
   const device = await Device.findOne({ _id: id, user: req.user.userId });
+
   if (!device) {
     throw new NotFoundError(`No device found with ID ${id}.`);
   }
 
-  // Retrieve historical data
-  const data = await SensorData.find({ device: id });
-  res.status(200).json({ data });
+  res.status(200).json({ dataHistory: device.dataHistory });
 };
