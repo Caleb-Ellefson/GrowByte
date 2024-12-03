@@ -10,8 +10,7 @@ export const authenticateUser = (req, res, next) => {
 
   if (!token) {
     console.log("No token found in cookies");
-    req.user = null; // Allow the request to proceed unauthenticated
-    return next();
+    throw new UnauthenticatedError('Authentication required');
   }
 
   try {
@@ -21,8 +20,7 @@ export const authenticateUser = (req, res, next) => {
     next();
   } catch (error) {
     console.error("JWT verification failed:", error);
-    req.user = null; // Allow the request to proceed unauthenticated
-    next();
+    throw new UnauthenticatedError('Invalid or expired token');
   }
 };
 
@@ -30,15 +28,15 @@ export const authenticateUser = (req, res, next) => {
 export const authorizePermissions = (...roles) => {
   return (req, res, next) => {
     try {
-      if (!roles.includes(req.user.role)) {
-        return res.status(403).json({ msg: 'Unauthorized to access this route' });
+      if (!req.user || !roles.includes(req.user.role)) {
+        throw new UnauthorizedError('Unauthorized to access this route');
       }
 
       // Move to the next middleware or controller
       next();
     } catch (error) {
       console.error('Authorization Error:', error);
-      return res.status(403).json({ msg: 'Unauthorized to access this route' });
+      throw error;
     }
   };
 };

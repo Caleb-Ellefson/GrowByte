@@ -1,16 +1,18 @@
 import Device from "../models/deviceModel.js";
 import { NotFoundError } from "../errors/customErrors.js";
 
-// Get all devices
+// Get all devices for the logged-in user
 export const getDevices = async (req, res) => {
   const devices = await Device.find({ user: req.user.userId });
 
+  // Instead of throwing an error, return an empty array
   if (!devices.length) {
-    throw new NotFoundError("No devices found.");
+    return res.status(200).json({ devices: [] });
   }
 
   res.status(200).json({ devices });
 };
+
 
 // Create a new device
 export const createDevice = async (req, res) => {
