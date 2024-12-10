@@ -1,27 +1,86 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Navbar from '../components/Nav';
-import image1 from "../assets/plant.svg";
 import { Link } from 'react-router-dom';
+import customFetch from '../utils/customFetch';
+import image1 from '../assets/plant.svg'
 
 const Landing = () => {
+  const [state, setState] = useState({
+    isUserLoggedIn: false,
+    userName: '',
+    loading: true,
+  });
+
+  const getCurrentUser = async () => {
+    try {
+      const response = await customFetch.get('/users/current-user');
+      const { user } = response.data;
+
+      if (user) {
+        setState({
+          isUserLoggedIn: true,
+          userName: user.name,
+          loading: false,
+        });
+      } else {
+        setState({
+          isUserLoggedIn: false,
+          userName: '',
+          loading: false,
+        });
+      }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        // Handle unauthenticated user
+        setState({
+          isUserLoggedIn: false,
+          userName: '',
+          loading: false,
+        });
+      } else {
+        console.error('Error fetching current user:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  if (state.loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Wrapper>
-      <nav>
-        <Navbar />
-      </nav>
       <div className="container page">
         <div className="info">
-          <p className='heading_1'>Learn what it takes to have your plants thrive</p>
-          <h1>
-            GrowByte <span>Tracking</span> App
-          </h1>
-          <p>
-            Monitor and maintain your plants effortlessly with real-time hydration tracking and smart alerts.
-          </p>
-          <Link to="/register" className="btn register-link">
-            Get Started
-          </Link>
+          {state.isUserLoggedIn ? (
+            <div>
+              <h1>Welcome back, <span>{state.userName}</span>!</h1>
+              <p className="heading_1">Learn what it takes to have your plants thrive.</p>
+              <div>
+              <Link to="/dashboard" className="btn register-link">
+                Go To Dashboard
+              </Link>
+              <Link to="/add-plant" className="btn register-link">
+                Add A new plant
+              </Link>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1>
+                GrowByte <span>Tracking</span> App
+              </h1>
+              <p>
+                Monitor and maintain your plants effortlessly with real-time hydration tracking and smart alerts.
+              </p>
+              <Link to="/register" className="btn register-link">
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
         <img src={image1} alt="Plants monitoring" className="main-img" />
       </div>

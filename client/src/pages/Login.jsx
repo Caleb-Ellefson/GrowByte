@@ -28,9 +28,6 @@ const Login = () => {
   return (
     <Wrapper>
       <div className="grid-item">
-        <NavBar />
-      </div>
-      <div className="grid-item">
         <Form method="post" className="form">
           <h4>Login</h4>
           <FormRow type="email" name="email" />

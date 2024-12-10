@@ -104,23 +104,27 @@ body {
   font-family: var(--body-font);
   font-weight: 400;
   line-height: 1.75;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll issues */
 }
 
 body::before {
   content: '';
-  position: fixed;
+  position: fixed; /* Ensures it stays fixed to the viewport */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('/src/assets/gradient.svg'); /* Noise overlay */
+  background-image: url('/src/assets/gradient.svg'); /* Ensure the image path is correct */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.05; /* Adjust the opacity for subtle noise */
+  opacity: 0.05; /* Adjust opacity for visibility */
   pointer-events: none; /* Prevent interaction with the overlay */
-  z-index: -1; /* Ensure it stays behind other elements */
+  z-index: -1; /* Push it behind all other content */
 }
+
 
 
 h1, h2, h3, h4, h5, h6 {
@@ -219,12 +223,12 @@ ul {
   color: var(--green-dark);
   background: var(--green-light);
 }
-/* form */
 
+/* form */
 .form {
   width: 90vw;
   max-width: var(--fixed-width);
-  background: var(--white);
+  background: var(--cream);
   border-radius: var(--borderRadius);
   box-shadow: var(--shadow-2);
   padding: 2rem 2.5rem;

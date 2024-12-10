@@ -6,7 +6,7 @@ import {
   getCurrentUser,
   updateUser,
 } from '../controllers/userController.js';
-import { authenticateUser, authorizePermissions } from '../middleware/authMiddleware.js';
+import { authenticateUser} from '../middleware/authMiddleware.js';
 import { validateUpdateUserInput } from '../middleware/validationMiddleware.js';
 
 // Get current user (requires authentication)
@@ -16,7 +16,6 @@ router.get('/current-user', authenticateUser, getCurrentUser);
 router.get(
   '/admin/app-stats',
   authenticateUser,
-  authorizePermissions('admin'),
   getApplicationStats
 );
 

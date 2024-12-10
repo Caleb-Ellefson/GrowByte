@@ -7,7 +7,9 @@ import {
   deleteDevice,
   reportSensorData,
   getDeviceHistory,
+  getHubDetails
 } from "../controllers/deviceController.js";
+import { authenticateUser } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -20,6 +22,9 @@ router.post("/", createDevice);
 // Get a single device by ID
 router.get("/:id", getDevice);
 
+// Get HUB details by MAC address
+router.get("/hub/:macaddress", authenticateUser, getHubDetails);
+
 // Update a device by ID
 router.patch("/:id", updateDevice);
 
@@ -27,7 +32,7 @@ router.patch("/:id", updateDevice);
 router.delete("/:id", deleteDevice);
 
 // Report sensor data for a specific device (ESP32C6 data)
-router.post("/:id/report", reportSensorData);
+router.patch('/:deviceId/report', authenticateUser, reportSensorData);
 
 // Get historical sensor data for a specific device
 router.get("/:id/history", getDeviceHistory);

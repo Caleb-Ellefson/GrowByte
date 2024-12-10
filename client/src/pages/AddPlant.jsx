@@ -35,7 +35,6 @@ const AddPlantForm = () => {
 
   return (
     <Wrapper>
-        <NavBar />
       <form className="form" onSubmit={handleSubmit}>
         <h2>Add New Plant</h2>
         <div className="form-row">

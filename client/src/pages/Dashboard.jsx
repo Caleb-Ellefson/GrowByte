@@ -45,7 +45,6 @@ const Dashboard = () => {
 
   return (
     <Wrapper>
-      <NavBar />
       <header>
         <h1>Your Plants Dashboard</h1>
         <Link to="/add-plant" className="add-btn">
