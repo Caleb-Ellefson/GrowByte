@@ -22,6 +22,7 @@ export const action = async ({ request }) => {
 const Register = () => {
   return (
     <Wrapper>
+        <NavBar />
       <Form method='post' className='form'>
         <h2>Register</h2>
         <FormRow type='text' name='name' />

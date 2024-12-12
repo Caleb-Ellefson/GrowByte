@@ -28,6 +28,9 @@ const Login = () => {
   return (
     <Wrapper>
       <div className="grid-item">
+        <NavBar />
+      </div>
+      <div className="grid-item">
         <Form method="post" className="form">
           <h4>Login</h4>
           <FormRow type="email" name="email" />
@@ -60,6 +63,7 @@ const Wrapper = styled.section`
     border-radius: 10px; /* Rounded corners */
     box-shadow: var(--shadow-3); /* Add shadow for depth */
     border-top: 5px solid var(--primary-500); /* Accent border */
+    background-color: white;
   }
 
   h4 {

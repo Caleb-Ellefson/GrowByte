@@ -7,9 +7,7 @@ import { toast } from 'react-toastify';
 const Navbar = () => {
   const [state, setState] = useState({
     isUserLoggedIn: false,
-    userAdmin: false,
     userName: '',
-    loading: true,
   });
 
   const navigate = useNavigate();
@@ -17,9 +15,9 @@ const Navbar = () => {
   const logoutUser = async () => {
     try {
       await customFetch.get('/auth/logout');
-      setState({ isUserLoggedIn: false, userAdmin: false, userName: '', loading: false });
+      setState({ isUserLoggedIn: false, userName: '' });
       toast.success('Logged out successfully!');
-      navigate('/login'); 
+      navigate('/login'); // Redirect to login page
     } catch (error) {
       console.error('Error logging out:', error);
       toast.error('Failed to log out. Please try again.');
@@ -30,55 +28,29 @@ const Navbar = () => {
     try {
       const response = await customFetch.get('/users/current-user');
       const { user } = response.data;
-
       if (user) {
         setState({
           isUserLoggedIn: true,
-          userAdmin: user.role === 'admin',
           userName: user.name,
-          loading: false,
         });
       } else {
         setState({
           isUserLoggedIn: false,
-          userAdmin: false,
           userName: '',
-          loading: false,
         });
       }
     } catch (error) {
-      if (error.response?.status === 401) {
-        // Handle unauthenticated user
-        console.log('User is not logged in.');
-        setState({
-          isUserLoggedIn: false,
-          userAdmin: false,
-          userName: '',
-          loading: false,
-        });
-      } else {
-        // Log other errors
-        console.error('Error fetching current user:', error);
-      }
+      // console.error('Error fetching current user:', error);
+      setState({
+        isUserLoggedIn: false,
+        userName: '',
+      });
     }
   };
 
   useEffect(() => {
     getCurrentUser();
   }, []);
-
-  if (state.loading) {
-    return (
-      <Nav>
-        <div className="logo">
-          <Link className="nav-link" to="/">Growbyte</Link>
-        </div>
-        <div className="nav-links">
-          <p>Loading...</p>
-        </div>
-      </Nav>
-    );
-  }
 
   return (
     <Nav>
@@ -94,9 +66,7 @@ const Navbar = () => {
             <button className="logout-btn" onClick={logoutUser}>Logout</button>
           </>
         ) : (
-          <>
-            <Link className="login-btn" to="/login">Login</Link>
-          </>
+          <Link className="login-btn" to="/login">Login</Link>
         )}
       </div>
     </Nav>
@@ -137,14 +107,13 @@ const Nav = styled.nav`
     gap: 1.5rem;
     justify-content: flex-end;
     flex: 2;
-    align-items: center;
   }
 
   .login-btn, .logout-btn {
     text-decoration: none;
     background-color: var(--primary-500);
     color: var(--cream);
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     padding: 0.5rem 1rem;
     border-radius: 20px;
@@ -159,13 +128,6 @@ const Nav = styled.nav`
   .login-btn:hover, .logout-btn:hover {
     background-color: var(--beige);
     transform: translateY(-2px);
-  }
-
-  .user-welcome {
-    color: var(--cream);
-    font-size: 1rem;
-    font-weight: bold;
-    margin-right: 1rem;
   }
 `;
 

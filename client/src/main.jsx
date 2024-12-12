@@ -5,7 +5,7 @@ import './index.css'
 import { AppProvider } from './context/appContext.jsx'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import { NavBar } from './components/Index.js'
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

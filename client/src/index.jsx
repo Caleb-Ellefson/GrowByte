@@ -1,40 +1,53 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import { Error, Landing, Login, Register, Dashboard, AddPlantForm } from './pages/Index.js';
+import { createBrowserRouter,
+ RouterProvider
+} from 'react-router-dom'
+import { Error, Landing, Login, Register, Dashboard, AddPlantForm} from './pages/Index.js'
 import { QueryClient } from '@tanstack/react-query';
 import { action as registerAction } from './pages/Register';
-import { action as loginAction } from './pages/Login.jsx';
-import Navbar from './components/Nav'; // Import your Navbar component
+import { action as loginAction } from './pages/Login.jsx'
 
-// Layout with Navbar
-const LayoutWithNavbar = () => (
-  <>
-    <Navbar />
-    <Outlet /> {/* Placeholder for child routes */}
-  </>
-);
 
-// Define routes
-const router = createBrowserRouter([
+
+const router = createBrowserRouter([  
   {
-    path: '/',
-    element: <LayoutWithNavbar />, // Use layout for these routes
+    path:'/',
+    element:<Landing />,
     errorElement: <Error />,
-    children: [
-      { index: true, element: <Landing /> },
-      { path: '/Dashboard', element: <Dashboard /> },
-      { path: '/Add-Plant', element: <AddPlantForm /> },
-      { path: '/login', element: <Login /> },
-      { path: '/register', element: <Register /> },
-    ],
+
   },
-]);
+  {
+    path:'/Login',
+    element:<Login/>,
+    action: loginAction(QueryClient),
+    errorElement: <Error />
+  },
+  {
+    path:'/Register',
+    element:<Register/>,
+    action: registerAction,
+    errorElement: <Error />
+  },
+  {
+  path:'/Dashboard',
+  element:<Dashboard/>,
+  errorElement: <Error />
+},
+{
+  path:'/Add-Plant',
+  element:<AddPlantForm/>,
+  errorElement: <Error />
+},
+])
 
 const App = () => {
-  return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  );
-};
 
-export default App;
+  return (
+
+      <div>
+          <RouterProvider router={router} />
+      </div>
+
+  )
+}
+
+export default App
