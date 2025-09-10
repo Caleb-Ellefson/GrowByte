@@ -1,18 +1,26 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #pragma once
 =======
 >>>>>>> 924a67c (GrowByte: Firmware: Added Hub Firmware to repo)
+=======
+#pragma once
+>>>>>>> 440237f (GrowByte: Firmware: Added Hub Firmware to repo)
 #include <Arduino.h>
 
 class Led {
 public:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 440237f (GrowByte: Firmware: Added Hub Firmware to repo)
     Led(int redPin, int greenPin, int bluePin);
     void red();
     void green();
     void orange();
     void off();
     void toggle();
+<<<<<<< HEAD
 =======
     Led(int redPin, int greenPin, int bluePin)
         : redPin(redPin), greenPin(greenPin), bluePin(bluePin) {
@@ -32,6 +40,8 @@ public:
         applyColor();
     }
 >>>>>>> 924a67c (GrowByte: Firmware: Added Hub Firmware to repo)
+=======
+>>>>>>> 440237f (GrowByte: Firmware: Added Hub Firmware to repo)
 
 private:
     int redPin, greenPin, bluePin;
@@ -39,11 +49,15 @@ private:
     bool isOn;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 440237f (GrowByte: Firmware: Added Hub Firmware to repo)
     void setColor(int r, int g, int b);
     void applyColor();
 };
 
 extern Led led;
+<<<<<<< HEAD
 =======
     void setColor(int r, int g, int b) {
         currentR = r;
@@ -60,3 +74,5 @@ extern Led led;
     }
 };
 >>>>>>> 924a67c (GrowByte: Firmware: Added Hub Firmware to repo)
+=======
+>>>>>>> 440237f (GrowByte: Firmware: Added Hub Firmware to repo)
