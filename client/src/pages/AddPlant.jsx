@@ -99,7 +99,7 @@ const Wrapper = styled.section`
       display: block;
       font-size: 1rem;
       font-family: var(--body-font);
-      color: var(--dark-gray);
+      color: var(--brown);
       margin-bottom: 0.5rem;
     }
 
