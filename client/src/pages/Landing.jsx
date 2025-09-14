@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Navbar from '../components/Nav';
 import image1 from "../assets/plant.svg";
-import image2 from "../assets/flowers.svg";
 import image3 from "../assets/temp.png";
 import image4 from "../assets/light.png";
 import image5 from "../assets/xiaoc6.png"
+import image6 from "../assets/Diagram.png"
+import image7 from "../assets/questions.svg"
 import Knob from '../components/pureknob';
 import { Link } from 'react-router-dom';
 import customFetch from '../utils/customFetch';
@@ -129,7 +130,6 @@ const Landing = () => {
               <p>Low</p>
             </div>
           </div>
-
           <div className="plant-card">
             <h2>Monstera Deliciosa</h2>
             <div>
@@ -182,6 +182,54 @@ const Landing = () => {
           </svg>
         </div>
       </div>
+      <div className='container_2'>
+        <div className="info">
+          <h2>How It Works</h2>
+          <p className="project-description">
+            GrowByte uses a simple <strong>system design</strong>. Each soil probe sends data to the hub via <strong>ESP-NOW</strong>, a local and secure communication protocol. 
+            The hub then connects to your Wi-Fi to forward the data to the server, where it is stored in the database. 
+            When you log into your Dashboard, the app retrieves and displays the data.
+          </p>
+        </div>
+        <div className="diagram-container">
+          <img src={image6} alt="System Diagram" width="500px" />
+        </div>
+        <div className="scroll-arrow">
+          <svg id="more-arrows">
+            <polygon className="arrow-top" points="37.6,27.9 1.8,1.3 3.3,0 37.6,25.3 71.9,0 73.7,1.3 " />
+            <polygon className="arrow-middle" points="37.6,45.8 0.8,18.7 4.4,16.4 37.6,41.2 71.2,16.4 74.5,18.7 " />
+            <polygon className="arrow-bottom" points="37.6,64 0,36.1 5.1,32.8 37.6,56.8 70.4,32.8 75.5,36.1 " />
+          </svg>
+        </div>
+      </div>
+      <div className="container_2 faq-section last-section">
+        <div className="info">
+          <h2>Frequently Asked Questions</h2>
+          <div className="faq-item">
+            <h3>Why doesn't the probe send data directly to the server?</h3>
+            <p>
+              Directly connecting each probe to Wi-Fi would require configuring credentials for every device, which could be cumbersome for users with multiple sensors. 
+              Using a central hub simplifies setup and ensures all probes are within range to reliably transmit their data.
+            </p>
+          </div>
+          <div className="faq-item">
+          <h3>How often is my soil hydration actually being checked?</h3>
+          <p>
+            Currently, the soil hydration probes send updates every 4 hours. Between measurements, the probes enter deep sleep mode to preserve battery life.
+          </p>
+          </div>
+          <div className="faq-item">
+            <h3>Is my data secure?</h3>
+            <p>
+            Yes. All communication between probes, hubs, and the server is encrypted, and your account data is protected using standard security practices. When first linking your hub to
+            your account a 2FA authenication takes place.
+            </p>
+          </div>
+        </div>
+        <div>
+          <img src={image7} />
+        </div>
+      </div>
     </Wrapper>
   );
 };
@@ -192,35 +240,6 @@ const Wrapper = styled.section`
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
 
-  .mock-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    margin-left: 4rem; /* adds space between text and first card */
-  }
-  
-  /* Pyramid effect: raise the middle card */
-  .mock-cards .plant-card:nth-child(2) {
-    transform: translateY(-20px); /* move the middle card up */
-  }
-  
-  .mock-cards .plant-card {
-    background-color: var(--beige);
-    padding: 1.5rem;
-    border-radius: var(--borderRadius);
-    box-shadow: var(--shadow-2);
-    text-align: center;
-    width: 250px;
-    color: var(--brown);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* smooth animation */
-  }
-  
-  .mock-cards .plant-card:hover {
-    transform: translateY(-10px) scale(1.03); /* lift and slightly enlarge */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* deeper shadow */
-  }  
-  
   nav {
     width: 100%;
     height: 4rem;
@@ -230,26 +249,77 @@ const Wrapper = styled.section`
     top: 0;
     left: 0;
     z-index: 10;
-    }
+  }
 
   .page,
   .container_2 {
-    scroll-snap-align: start;   /* each section snaps */
-    height: 100vh;              /* full viewport height */
+    position: relative;
+    scroll-snap-align: start;
+    height: 100vh;              
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 4rem;          /* offset for navbar */
+    padding-top: 4rem;          
+    gap: 2rem;
   }
+  
+  /* FAQ Section */
+  .faq-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+  }
+  
+  .faq-section .info {
+    max-width: 1000px;
+  }
+  
+  .faq-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .faq-item h3 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #FFFFFF;
+    margin-bottom: 0.5rem;
+  }
+  
+  .faq-item p {
+    font-family: 'Lora', serif;
+    font-weight: 350;
+    font-size: 1.25rem !important;  /* smaller font size */
+    line-height: 1.6;
+    color: #FFFFFF;
+    margin-bottom: 0.75rem;
+  }
+  
+  .faq-section img {
+    max-width: 650px;
+    width: 100%;
+    height: auto;
+  }
+  
 
   h1 {
     font-family: 'Lora', serif;
     font-weight: 700;
     font-size: 3rem;
     color: #FFFFFF;
+    margin-bottom: 0.5rem;
+
     span {
       color: #57B894;
     }
+  }
+  h3 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    color: #FFFFFF;
     margin-bottom: 0.5rem;
   }
 
@@ -259,7 +329,7 @@ const Wrapper = styled.section`
     line-height: 1.8;
     font-size: 1.5rem;
     color: #FFFFFF;
-    margin-bottom: 1rem;font-family
+    margin-bottom: 1rem;
     max-width: 35em;
   }
 
@@ -269,17 +339,18 @@ const Wrapper = styled.section`
 
   .main-img {
     display: block;
-    width: 100%;           /* take full width of its container */
-    max-width: 700px;      /* optional: set a larger max width */
-    height: auto;          /* maintain aspect ratio */
+    width: 100%;           
+    max-width: 700px;      
+    height: auto;          
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
   }
-  
+
   .page img:hover {
-    transform: scale(1.05); /* subtle zoom on hover */
+    transform: scale(1.05);
   }
+
   .btn {
     font-family: 'Lora', serif;
     font-size: 1.2rem;
@@ -298,46 +369,55 @@ const Wrapper = styled.section`
     transform: translateY(-2px);
   }
 
-  @media (min-width: 992px) {
-    .page {
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      column-gap: 3rem;
-    }
-  }
-  
-
-  .container_2 {
-    scroll-snap-align: start;
-    height: 100vh;
+  /* Mock cards styling */
+  .mock-cards {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    padding: 4rem;
     gap: 2rem;
+    margin-left: 4rem;
+    margin-bottom: 3rem;
   }
-  
-  
+
+  .mock-cards .plant-card:nth-child(2) {
+    transform: translateY(-20px);
+  }
+
+  .mock-cards .plant-card {
+    background-color: var(--beige);
+    padding: 1.5rem;
+    border-radius: var(--borderRadius);
+    box-shadow: var(--shadow-2);
+    text-align: center;
+    width: 250px;
+    color: var(--brown);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .mock-cards .plant-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+
   .container_2 .info h2 {
     font-size: 2.5rem;
     font-family: 'Lora', serif;
     margin-bottom: 1rem;
     color: #FFFFFF;
   }
-  
-  .container_2 .info p {
-    font-size: 1.4rem;       /* slightly larger */
-    line-height: 2;           /* more spacing for readability */
+
+  .container_2 .info p,
+  .project-description {
+    font-size: 1.4rem;
+    line-height: 2;
     max-width: 35em;
     color: #FFFFFF;
     margin-top: 1rem;
-  }  
-  
-  .container_2 .mock-card {
-    display: flex;
-    justify-content: center;
   }
-  
+
+  /* Plant card inside container_2 */
   .container_2 .plant-card {
-    background-color: var(--beige); /* same as dashboard */
+    background-color: var(--beige);
     padding: 1.5rem;
     border-radius: var(--borderRadius);
     box-shadow: var(--shadow-2);
@@ -345,78 +425,88 @@ const Wrapper = styled.section`
     width: 225px;
     color: var(--brown);
   }
-  
+
   .container_2 .plant-card h2 {
     font-size: 1.5rem;
-    color: var(--brown); /* match dashboard heading */
+    color: var(--brown);
     margin-bottom: 1rem;
   }
-  
+
   .container_2 .plant-card .card-heading {
     font-size: 1.2rem;
-    color: var(--brown); /* same as dashboard */
+    color: var(--brown);
     margin-top: 0.5rem;
   }
-  
-  .project-description {
-    font-size: 1.4rem;    /* slightly larger */
-    line-height: 2;       /* more space between lines */
+
+  /* Hardware list */
+  .hardware-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .hardware-list li {
+    margin-bottom: 1.25rem;
+    font-size: 1.2rem;
+    line-height: 1.8;
     color: #FFFFFF;
-    max-width: 35em;
-    margin-top: 1rem;
+  }
+
+  /* Diagram container */
+  .diagram-container {
+    display: inline-block;
+    padding: 40px;      /* increased from 26px */
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  
+  .diagram-container img {
+    display: block;
+    max-width: 700px;   /* increased from 500px */
+    width: 100%;        /* makes it responsive */
+    height: auto;
+    border-radius: 8px;
+  }  
+
+  /* Scroll arrows */
+  .scroll-arrow {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    animation: bounce 2s infinite;
+  }
+  .last-section .scroll-arrow {
+    display: none;
+  }
+
+  .scroll-arrow svg {
+    width: 100px;
+    height: 100px;
+    fill: #fff;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .scroll-arrow:hover svg {
+    opacity: 1;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
   }
 
   @media (min-width: 992px) {
     .page {
       display: grid;
-      grid-template-columns: 1fr 500px; /* optionally make the image wider */
-      column-gap: 5rem;                 /* increases space between text and image */
+      grid-template-columns: 1fr 500px;
+      column-gap: 5rem;
     }
-    .scroll-arrow {
-      position: absolute;
-      bottom: .5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      cursor: pointer;
-      animation: bounce 2s infinite;
-    }
-    
-    .scroll-arrow svg {
-      width: 100px;
-      height: 100px;
-      fill: #fff;
-      opacity: 0.8;
-      transition: opacity 0.3s ease;
-    }
-    
-    .scroll-arrow:hover svg {
-      opacity: 1;
-    }
-    
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
-    
-    .hardware-list {
-      list-style: disc;       /* ensure bullets */
-      padding-left: 1.5rem;   /* indentation for bullets */
-      margin-top: 1.5rem;
-    
-      li {
-        margin-bottom: 1.25rem;  /* spacing between bullets */
-        font-size: 1.2rem;
-        line-height: 1.8;
-        color: #FFFFFF;
-    
-        &::marker {
-          // font-size: 1.25em;
-          color: white;       /* black bullet points */
-        }
-      }
-    }
-    
+  }
 `;
 
 
