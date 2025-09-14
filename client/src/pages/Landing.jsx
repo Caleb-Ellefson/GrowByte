@@ -5,6 +5,7 @@ import image1 from "../assets/plant.svg";
 import image2 from "../assets/flowers.svg";
 import image3 from "../assets/temp.png";
 import image4 from "../assets/light.png";
+import image5 from "../assets/xiaoc6.png"
 import Knob from '../components/pureknob';
 import { Link } from 'react-router-dom';
 import customFetch from '../utils/customFetch';
@@ -155,6 +156,32 @@ const Landing = () => {
           </svg>
         </div>
       </div>
+      <div className='container_2'>
+        <div>
+          <img src={image5} alt="Xiao C6" width="800px"/>
+        </div>
+        <div className="info">
+          <h2>ESP32 Power!</h2>
+          <p className="project-description">
+            At the core of GrowByte is the <strong>XIAO ESP32-C6</strong>, chosen for its compact size and ESP based tools. 
+            The hardware is designed to be <strong>accessible, reliable, and easy to maintain</strong>. 
+            Utilities used in this project:
+          </p>
+          <ul className="hardware-list">
+            <li>  <strong>ESP-NOW</strong> for low-latency local communication between devices.</li>
+            <li>  <strong>Deep Sleep</strong> functionality to extend battery life during idle times.</li>
+            <li>  <strong>Wi-Fi</strong> connectivity to send real-time plant data to the cloud.</li>
+            <li>  Optimized for <strong>scalability</strong>, supporting multiple sensors and hubs.</li>
+          </ul>
+        </div>
+        <div className="scroll-arrow">
+          <svg id="more-arrows">
+            <polygon className="arrow-top" points="37.6,27.9 1.8,1.3 3.3,0 37.6,25.3 71.9,0 73.7,1.3 " />
+            <polygon className="arrow-middle" points="37.6,45.8 0.8,18.7 4.4,16.4 37.6,41.2 71.2,16.4 74.5,18.7 " />
+            <polygon className="arrow-bottom" points="37.6,64 0,36.1 5.1,32.8 37.6,56.8 70.4,32.8 75.5,36.1 " />
+          </svg>
+        </div>
+      </div>
     </Wrapper>
   );
 };
@@ -232,7 +259,7 @@ const Wrapper = styled.section`
     line-height: 1.8;
     font-size: 1.5rem;
     color: #FFFFFF;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem;font-family
     max-width: 35em;
   }
 
@@ -315,7 +342,7 @@ const Wrapper = styled.section`
     border-radius: var(--borderRadius);
     box-shadow: var(--shadow-2);
     text-align: center;
-    width: 250px;
+    width: 225px;
     color: var(--brown);
   }
   
@@ -372,8 +399,24 @@ const Wrapper = styled.section`
       60% { transform: translateY(-5px); }
     }
     
+    .hardware-list {
+      list-style: disc;       /* ensure bullets */
+      padding-left: 1.5rem;   /* indentation for bullets */
+      margin-top: 1.5rem;
     
-
+      li {
+        margin-bottom: 1.25rem;  /* spacing between bullets */
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #FFFFFF;
+    
+        &::marker {
+          // font-size: 1.25em;
+          color: white;       /* black bullet points */
+        }
+      }
+    }
+    
 `;
 
 
