@@ -18,7 +18,6 @@ export const action =
       toast.success('Login successful');
       return redirect('/');
     } catch (error) {
-      console.log(error);
       toast.error(error?.response?.data);
       return error;
     }
