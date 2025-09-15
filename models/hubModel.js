@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
 const HubSchema = new mongoose.Schema({
-  deviceId: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-  password: { type: String, required: true }, // Store hashed password
-  apiKey: { type: String, required: true, unique: true }, // Unique API key
+  macAddress: { type: String, required: true, unique: true },
+  key: { type: String, required: true }, // device-generated verification key
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // link to user
+  name: { type: String, default: "My Hub" },
+  createdAt: { type: Date, default: Date.now }
 });
 
 const Hub = mongoose.model('Hub', HubSchema);

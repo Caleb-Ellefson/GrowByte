@@ -7,7 +7,8 @@ import {
   deleteDevice,
   reportSensorData,
   getDeviceHistory,
-  getHubDetails
+  getHubDetails,
+  verifyDevice
 } from "../controllers/deviceController.js";
 import { authenticateUser } from '../middleware/authMiddleware.js';
 
@@ -21,6 +22,9 @@ router.post("/", createDevice);
 
 // Get a single device by ID
 router.get("/:id", getDevice);
+
+// Verify Hub
+router.post("/verify", authenticateUser, verifyDevice);
 
 // Get HUB details by MAC address
 router.get("/hub/:macaddress", authenticateUser, getHubDetails);

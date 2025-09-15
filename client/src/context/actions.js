@@ -1,17 +1,3 @@
-export const TEAM_T = 'selectTeamT'
-export const TEAM_CT = 'selectTeamCT'
-
-export const DUST = 'dust_'
-export const ANCIENT = 'ancient_'
-export const ANUBIS = 'anubis_'
-export const INFERNO = 'inferno_'
-export const NUKE = 'nuke_'
-export const OVERPASS = 'overpass_'
-export const MIRAGE = 'mirage_'
-export const TRAIN = 'train_'
-export const VERTIGO = 'vertigo_'
-export const OFFICE = 'office_'
-
 export const DISPLAY_ALERT = 'SHOW_ALERT';
 export const CLEAR_ALERT = 'CLEAR_ALERT';
 

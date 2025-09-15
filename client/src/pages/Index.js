@@ -5,4 +5,5 @@ export { default as Login } from './Login'
 export { default as Register } from './Register'
 export { default as Dashboard } from './Dashboard'
 export { default as AddPlantForm } from './AddPlant'
+export { default as VerifyDevice } from './VerifyDevice'
 

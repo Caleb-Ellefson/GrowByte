@@ -7,16 +7,19 @@ import styled from 'styled-components';
 export const action =
   (queryClient) =>
   async ({ request }) => {
-    // Grab the data from the form
     const formData = await request.formData();
-    // Convert data to object
     const data = Object.fromEntries(formData);
-    try {
-      // Login route using data from form
-      await customFetch.post('/auth/login', data);
 
+    // Grab the redirect param from the URL
+    const url = new URL(request.url);
+    const redirectTo = url.searchParams.get("redirect") || "/";
+
+    try {
+      await customFetch.post('/auth/login', data);
       toast.success('Login successful');
-      return redirect('/');
+
+      // Redirect back to original page
+      return redirect(redirectTo);
     } catch (error) {
       toast.error(error?.response?.data);
       return error;
