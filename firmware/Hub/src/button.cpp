@@ -32,7 +32,6 @@ void Button::update() {
     if (isPressed && !longPressHandled && (millis() - pressStartTime >= longPressDuration)) {
         preferences.remove("ssid");
         preferences.remove("password");
-        preferences.remove("tokenKey");
         led.red();
         delay(2000);
         ESP.restart();

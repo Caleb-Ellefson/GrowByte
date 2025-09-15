@@ -1,111 +1,160 @@
+#include <ArduinoJson.h> 
 #include "wifi_utils.h"
-#include <ArduinoJson.h>
-#include <HTTPClient.h>
 #include "led.h"
+#undef LOW
+#undef HIGH 
+#include "qrcodegen.hpp"
+using namespace qrcodegen;
+
+Preferences preferences;
+WebServer server(80);
 
 String ssid;
 String password;
-String verificationCode = "";
-String serverURL = "http://192.168.1.173:5100/api/v1/devices";
-WiFiClient client;
-HTTPClient http;
+String key = "";
+
+String generateKey() {
+    char buf[13];
+    for (int i = 0; i < 12; i++) {
+        buf[i] = "0123456789abcdef"[esp_random() % 16];
+    }
+    buf[12] = '\0';
+    return String(buf);
+}
 
 int connectToWiFi() {
     ssid = preferences.getString("ssid", "");
     password = preferences.getString("password", "");
 
-    if (ssid.isEmpty()) {
-        Serial.println("[ERROR] No Wi-Fi credentials found. Starting AP Mode...");
-        led.orange();
-        startWebServer();
-        return 1;
-    }
+    if (ssid.isEmpty()) return 1; // no creds
 
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid.c_str(), password.c_str());
-    Serial.print("Connecting to WiFi ..");
+    Serial.print("Connecting to Wi-Fi ...");
 
     unsigned long startTime = millis();
-    const unsigned long timeout = 5000;
-
-    while (WiFi.status() != WL_CONNECTED) {
-        if (millis() - startTime >= timeout) {
-            Serial.println("\n[ERROR] Wi-Fi connection timed out. Please Try Again.");
-            server.send(408, "text/plain", "Wi-Fi connection timed out. Please Try Again.");
-            led.red();
-            return 1;
-        }
-        Serial.print('.');
+    while (WiFi.status() != WL_CONNECTED && millis() - startTime < 5000) {
+        Serial.print(".");
         delay(500);
     }
 
     if (WiFi.status() == WL_CONNECTED) {
-      Serial.println("\nConnected to WiFi:");
-      Serial.println(WiFi.localIP());
-      led.green();
-      return 0;
+        Serial.println("\nConnected: " + WiFi.localIP().toString());
+        return 0;
     }
     return 1;
 }
 
-void startWebServer() {
-    WiFi.softAP(AP_SSID, AP_PASS);
-    IPAddress IP = WiFi.softAPIP();
-    Serial.print("AP IP Address: ");
-    Serial.println(IP);
+void startAPServer() {
+    WiFi.softAP("ESP_SETUP");
+    Serial.println("AP started at " + WiFi.softAPIP().toString());
 
     server.on("/", handleRoot);
-    server.on("/connect", handleConnect);
-    server.begin();
+    server.on("/connect", HTTP_POST, handleConnect);
+    server.on("/qr", handleQR);
 
-    Serial.println("[INFO] Web server started successfully!");
-    led.orange();
+    server.begin();
+    Serial.println("AP Server running...");
+}
+
+void handleRoot() {
+    String html = R"rawliteral(
+        <html><body>
+        <h2>Wi-Fi Setup</h2>
+        <form action="/connect" method="post">
+        SSID:<br><input type="text" name="ssid"><br>
+        Password:<br><input type="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+        </form>
+        </body></html>
+    )rawliteral";
+    server.send(200, "text/html", html);
 }
 
 void handleConnect() {
     ssid = server.arg("ssid");
     password = server.arg("password");
+    preferences.putString("ssid", ssid);
+    preferences.putString("password", password);
 
-    Serial.println("[INFO] Received new Wi-Fi credentials:");
-    Serial.println("SSID: " + ssid);
-    Serial.println("Password: " + password);
-
-    // Store the new credentials
-    if (WiFi.status() == WL_CONNECTED){
-      preferences.putString("ssid", ssid);
-      preferences.putString("password", password);
+    // Generate key if not exists
+    key = preferences.getString("key", "");
+    if (key.isEmpty()) {
+        key = generateKey();
+        preferences.putString("key", key);
     }
 
-    // Display a confirmation message
-    server.send(200, "text/plain", "Credentials saved. Rebooting Device.");
-    Serial.println("[INFO] Credentials saved, rebooting device...");
-
-    delay(3000);
-    server.stop();
-    ESP.restart();
+    server.sendHeader("Location", "/qr");
+    server.send(302, "text/plain", "Redirecting to QR code...");
 }
 
-void sendToServer() {
+void handleQR() {
+    key = preferences.getString("key", "");
+
+    String mac = (WiFi.getMode() & WIFI_AP) ? WiFi.softAPmacAddress() : WiFi.macAddress();
+
+    String url = "http://localhost:5173/verify?key=" + key + "&mac=" + mac;
+    Serial.println(url);
+    const QrCode::Ecc err = QrCode::Ecc::MEDIUM;
+    QrCode qr = QrCode::encodeText(url.c_str(), err);
+
+    int size = qr.getSize();
+    int border = 4;
+    int canvasSize = (size + border * 2) * 10; // 10px per module
+
+    //Trying with normal tables will break the browser....
+    String html = "<html><body>";
+    html += "<h1>Scan QR</h1>";
+    html += "<p><strong>URL:</strong> " + url + "</p>";
+    html += "<p><strong>MAC:</strong> " + mac + "</p>";
+    
+    html += "<canvas id='qrcanvas' width='" + String(canvasSize) + "' height='" + String(canvasSize) + "'></canvas>";
+    html += "<script>";
+    html += "var canvas = document.getElementById('qrcanvas');";
+    html += "var ctx = canvas.getContext('2d');";
+    html += "ctx.fillStyle = 'white';";
+    html += "ctx.fillRect(0,0,canvas.width,canvas.height);";
+    html += "ctx.fillStyle = 'black';";
+    
+    for (int y = 0; y < size; y++) {
+        for (int x = 0; x < size; x++) {
+            if (qr.getModule(x, y)) {
+                int px = (x + border) * 10;
+                int py = (y + border) * 10;
+                html += "ctx.fillRect(" + String(px) + "," + String(py) + ",10,10);";
+            }
+        }
+    }
+
+    html += "</script></body></html>";
+    server.send(200, "text/html", html);
+}
+
+
+void sendToServer(const String &serverURL) {
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("[WARN] Cannot send data, Wi-Fi not connected.");
+        return;
+    }
+
+    WiFiClient client;
+    HTTPClient http;
+
     String url = serverURL + "/" + WiFi.macAddress() + "/report";
     
-    // Create the JSON document
     DynamicJsonDocument doc(1024);
-    doc["temperature"] = random(20, 30);
+    doc["temperature"] = random(20, 30); // replace with sensor readings
     doc["light"] = random(50, 100);
     doc["hydration"] = random(30, 70);
 
-    // Serialize JSON to string
     String payload;
     serializeJson(doc, payload);
 
-    // Initialize HTTP client
     http.begin(client, url);
     http.addHeader("Content-Type", "application/json");
 
-    // Send the PATCH request
     int httpResponseCode = http.PATCH(payload);
 
-    // Handle the response
     if (httpResponseCode > 0) {
         Serial.printf("[INFO] HTTP Response code: %d\n", httpResponseCode);
         String response = http.getString();
@@ -115,26 +164,6 @@ void sendToServer() {
         Serial.printf("[ERROR] PATCH failed, error: %s\n", http.errorToString(httpResponseCode).c_str());
     }
 
-    // End the HTTP connection
     http.end();
 }
 
-void handleRoot() {
-    String html = R"rawliteral(
-    <!DOCTYPE html>
-    <html>
-    <body>
-        <h2>WiFi Setup</h2>
-        <form action="/connect" method="post">
-            SSID:<br>
-            <input type="text" name="ssid"><br>
-            Password:<br>
-            <input type="password" name="password"><br><br>
-            <input type="submit" value="Submit">
-        </form> 
-    </body>
-    </html>
-    )rawliteral";
-
-    server.send(200, "text/html", html);
-}
