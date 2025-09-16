@@ -1,6 +1,5 @@
 import Device from "../models/deviceModel.js";
 import { NotFoundError } from "../errors/customErrors.js";
-import Hub from "../models/hubModel.js"
 import { v4 as uuidv4 } from 'uuid'; // Install 'uuid' package
 
 // Get all devices for the logged-in user
@@ -148,36 +147,3 @@ export const getHubDetails = async (req, res) => {
     res.status(error.statusCode || 500).json({ msg: error.message });
   }
 };
-
-export const verifyDevice = async (req, res) => {
-  try {
-
-    const { code, macAddress } = req.body;
-    
-    if (!code || !macAddress) {
-      return res.status(400).json({ success: false, message: "Missing code or MAC address" });
-    }
-    
-    let hub = await Hub.findOne({ macAddress });
-    if (hub) {
-      return res.status(400).json({ success: false, message: "Hub already registered." });
-    }
-    
-    hub = new Hub({
-      macAddress,
-      key: code,  // <-- store the code in the key field
-      user: req.user.userId,
-    });
-    
-    await hub.save();
-  
-    console.log("Hub saved successfully:", hub);
-
-    res.status(201).json({ success: true, message: "Hub verified and linked to user!", hub });
-  } catch (err) {
-    console.error("Error in verifyDevice:", err);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
-};
-
-
