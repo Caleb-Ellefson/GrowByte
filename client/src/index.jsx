@@ -1,7 +1,7 @@
 import { createBrowserRouter,
  RouterProvider
 } from 'react-router-dom'
-import { Error, Landing, Login, Register, Dashboard, AddPlantForm, VerifyDevice} from './pages/Index.js'
+import { Error, Landing, Login, Register, Dashboard, AddPlantForm} from './pages/Index.js'
 import { QueryClient } from '@tanstack/react-query';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login.jsx'
@@ -35,11 +35,6 @@ const router = createBrowserRouter([
 {
   path:'/Add-Plant',
   element:<AddPlantForm/>,
-  errorElement: <Error />
-},
-{
-  path:'/Verify',
-  element:<VerifyDevice/>,
   errorElement: <Error />
 },
 ])
