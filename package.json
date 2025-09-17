@@ -1,7 +1,7 @@
 {
-    "name": "Strat-Roulette",
+    "name": "Growbyte",
     "version": "1.0.0",
-    "description": "[Strat-Roulette]",
+    "description": "Growbyte",
     "main": "index.js",
     "type": "module",
     "scripts": {
