@@ -1,5 +1,5 @@
 import {
-  UnauthenticatedError,
+  UnauthenticatedError
 } from '../errors/customErrors.js';
 import { verifyJWT } from '../utils/tokenUtils.js';
 import Hub from '../models/hubModel.js';
