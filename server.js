@@ -6,8 +6,6 @@ import express from "express";
 const app = express()
 //logs requests 
 import morgan from "morgan";
-import connectDB from './db/connect.js';
-import { nanoid } from 'nanoid';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 
@@ -15,7 +13,6 @@ import cookieParser from 'cookie-parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
-
 
 // Routers
 import deviceRouter from './routes/deviceRouter.js';
@@ -25,7 +22,6 @@ import userRouter from './routes/userRouter.js'
 //Middleware
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 import { authenticateUser } from './middleware/authMiddleware.js'
-
 
 app.use(express.json())
 app.use(cookieParser())
