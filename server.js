@@ -6,8 +6,6 @@ import express from "express";
 const app = express()
 //logs requests 
 import morgan from "morgan";
-import connectDB from './db/connect.js';
-import { nanoid } from 'nanoid';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 
