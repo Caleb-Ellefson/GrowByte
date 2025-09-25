@@ -51,7 +51,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Growbyte is a scalable IoT platform for soil monitoring devices. Devices dynamically connect to Wi-Fi, securely authenticate with the backend, and start streaming data with minimal setup. Checkout the demo <a href=""> here. </a>
+Growbyte is a scalable IoT platform that delivers real-time soil monitoring with minimal setup. Devices connect securely, start streaming data automatically, and integrate seamlessly with your dashboard. Check out the <a href="">demo.</a>
 
 <br />
 
