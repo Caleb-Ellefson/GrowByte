@@ -115,7 +115,8 @@ This section should list any major frameworks/libraries used to bootstrap your p
 * [![MongoDB][mongo.js]][mongo-url]
 * [![Node.js][node.js]][node-url]
 * [![Express.js][express.js]][express-url]
-* [esp.js]
+* [![esp.js]](https://img.shields.io/badge/Espressif-black?style=for-the-badge&logo=Espressif
+)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
