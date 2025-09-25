@@ -74,7 +74,7 @@ If you’re curious about how the firmware works or want to explore the lower-le
 
 ![diagram]
 
-There are five main components of growbytes systems architecture:
+There are five components of GrowBytes system architecture:
 * Soil monitor - What collects your soils hydration
 * The Hub - What sends your data to the server
 * Server - How you data is moved
