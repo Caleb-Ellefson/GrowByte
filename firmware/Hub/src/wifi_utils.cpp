@@ -131,7 +131,8 @@ void handleQR() {
 }
 
 
-void sendToServer(const String &serverURL) {
+// Send to server using HTTP PATCH
+void sendToServer(const SoilData &data, const uint8_t *macAddr) {
     if (WiFi.status() != WL_CONNECTED) {
         Serial.println("[WARN] Cannot send data, Wi-Fi not connected.");
         return;
@@ -140,12 +141,18 @@ void sendToServer(const String &serverURL) {
     WiFiClient client;
     HTTPClient http;
 
-    String url = serverURL + "/" + WiFi.macAddress() + "/report";
-    
-    DynamicJsonDocument doc(1024);
-    doc["temperature"] = random(20, 30); // replace with sensor readings
-    doc["light"] = random(50, 100);
-    doc["hydration"] = random(30, 70);
+    // Convert MAC to string
+    char macStr[18];
+    sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X",
+            macAddr[0], macAddr[1], macAddr[2],
+            macAddr[3], macAddr[4], macAddr[5]);
+
+    String url = "http://192.168.1.146:5173/api/v1/devices/" + String(macStr) + "/report";
+
+    DynamicJsonDocument doc(256);
+    doc["moisture"] = data.moisture;
+    doc["temperature"] = data.temperature;
+    doc["light"] = data.light;
 
     String payload;
     serializeJson(doc, payload);
@@ -166,4 +173,3 @@ void sendToServer(const String &serverURL) {
 
     http.end();
 }
-

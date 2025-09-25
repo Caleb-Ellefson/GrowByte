@@ -25,23 +25,6 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password, deviceId } = req.body;
 
-  // HUB Login
-  if (deviceId) {
-    const hub = await Hub.findOne({ deviceId });
-
-    const isValidHub =
-      hub && (await comparePassword(password, hub.password));
-
-    if (!isValidHub) throw new UnauthenticatedError('Invalid HUB credentials');
-
-    // Return the API key for HUB
-    res.status(StatusCodes.OK).json({
-      msg: 'HUB logged in successfully',
-      apiKey: hub.apiKey, // Return the API key for HUBs
-    });
-    return;
-  }
-
   // User Login
   const user = await User.findOne({ email });
 
@@ -72,74 +55,4 @@ export const logout = (req, res) => {
     expires: new Date(Date.now()),
   });
   res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
-};
-
-// Register a new HUB
-export const registerHub = async (req, res) => {
-  const { deviceId, name, password } = req.body;
-
-  if (!deviceId || !name || !password) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ msg: 'All fields are required' });
-  }
-
-  try {
-    const existingHub = await Hub.findOne({ deviceId });
-    if (existingHub) {
-      return res.status(StatusCodes.CONFLICT).json({ msg: 'HUB already registered' });
-    }
-
-    const hashedPassword = await hashPassword(password);
-    const apiKey = generateApiKey();
-
-    const hub = await Hub.create({
-      deviceId,
-      name,
-      password: hashedPassword,
-      apiKey,
-    });
-
-    res.status(StatusCodes.CREATED).json({
-      msg: 'HUB registered successfully',
-      apiKey,
-    });
-  } catch (error) {
-    console.error('Error registering HUB:', error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Error registering HUB' });
-  }
-};
-
-// Generate a new API key for a HUB
-export const generateNewApiKey = async (req, res) => {
-  const { deviceId } = req.body;
-
-  if (!deviceId) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ msg: 'Device ID is required' });
-  }
-
-  try {
-    // Find the HUB in the database
-    const hub = await Hub.findOne({ deviceId });
-    if (!hub) {
-      return res.status(StatusCodes.NOT_FOUND).json({ msg: 'HUB not found' });
-    }
-
-    // Generate a new API key
-    const newApiKey = generateApiKey();
-
-    // Update the HUB's API key in the database
-    hub.apiKey = newApiKey;
-    await hub.save();
-
-    // Log the regeneration
-    console.log(`API key regenerated for HUB: ${deviceId}`);
-
-    // Return the new API key
-    res.status(StatusCodes.OK).json({
-      msg: 'API key regenerated successfully',
-      apiKey: newApiKey,
-    });
-  } catch (error) {
-    console.error('Error regenerating API key:', error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: 'Error regenerating API key' });
-  }
 };

@@ -179,5 +179,3 @@ export const verifyDevice = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
-
