@@ -44,33 +44,6 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
 <br />
 
 <!-- ABOUT THE PROJECT -->
@@ -78,7 +51,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Growbyte is a scalable IoT platform for soil monitoring devices. Devices dynamically connect to Wi-Fi, securely authenticate with the backend, and start streaming data with minimal setup.
+Growbyte is a scalable IoT platform for soil monitoring devices. Devices dynamically connect to Wi-Fi, securely authenticate with the backend, and start streaming data with minimal setup. Checkout the demo <a href=""> here. </a>
 
 <br />
 
@@ -99,10 +72,16 @@ If you’re curious about how the firmware works or want to explore the lower-le
 
 ### System Architecture
 
-The diagram below shows how Growbyte devices interact with the hub, backend, and web interface.  
-Sensor nodes collect soil data and send it to a central hub using ESP-NOW. The hub then forwards that data securely to the backend, where it’s processed and displayed to the user in real time.
-
 ![diagram]
+
+There are five main components of growbytes systems architecture:
+* Soil monitor - What collects your soils hydration
+* The Hub - What sends your data to the server
+* Server - How you data is moved
+* Database - Where all your data is stored
+* Webpage - Where all your data is displayed
+  
+Sensor nodes collect soil data and sends it to a central hub using ESP-NOW. The hub then forwards that data securely to the backend, where it then can be queryed by the front end to display your data.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
