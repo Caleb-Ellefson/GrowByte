@@ -23,15 +23,15 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="client/favicon.ico" alt="Logo" width="80" height="80">
+    <img src="client/favicon.ico" alt="Logo" width="80" height="80"/>
   </a>
 
   <h3 align="center">GrowByte</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    A End To End IOT Soil Hydration Monitoring Solution
     <br />
-    <a href="https://github.com/Caleb-Ellefson/GrowByte/"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Caleb-Ellefson/GrowByte/firmware/.readme"><strong>Explore the firmware docs »</strong></a>
     <br />
     <br />
     <a href="">View Demo</a>
@@ -71,33 +71,41 @@
 </details>
 
 
+<br />
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Growbyte's system is designed so that someone with no programming background can connect devices to any 
-Wi-Fi network, authenticate them securely, and begin monitoring their plants with minimal setup, 
-replicating the usability of a real consumer product.
+Growbyte is a scalable IoT platform for soil monitoring devices. Devices dynamically connect to Wi-Fi, securely authenticate with the backend, and start streaming data with minimal setup.
+
+<br />
+
+### Why I Built This
+The goal of this project was to dive into the small details that most people never think about, the things that make IoT devices feel seamless. Anwersing the questions like:
+
+* How do all those devices connect to my Wi-Fi without me hardcoding credentials into each one? 
+* How is data transmitted securely?
+* How does a device get linked to my account and not someone else’s?
+* How do these devices communicate with each other behind the scenes?
+
+Most of the time when I buy an IoT product, it “just works,” but I wanted to understand how it all works. Sure, I could spin up a basic soil hydration sensor that posts data to a server and displays it on a webpage in a day. But how long would it take me to build a product-level IoT device, one that handles authentication, secure communication, dynamic configuration, and scalability the way a real product does?
+
+If you’re curious about how the firmware works or want to explore the lower-level details, check out the firmware README
 
 
-The goals of this project:
-* Make connecting to devices dynamaic. The user shouldn't have to be a programmer to setup the project.
-* Security. All devices making requests to the server need to have a token. No open endpoints.
-* System Design needs to be scaleable. Mutiple users with mutiple devices.
-* End to end solution: full stack solution to allow each user to configure and see their data.
+<br />
 
-Under the hood, GrowByte is an embedded IoT system built around low power sensor nodes that measure
-soil moisture and communicate with a central hub using ESP-NOW. The hub collects sensor data and pushes
-it to a backend server, where it’s processed and displayed through a web application.
-This architecture combines firmware, backend services, and frontend visualization into a cohesive, 
-production-ready platform.
+### System Architecture
+
+The diagram below shows how Growbyte devices interact with the hub, backend, and web interface.  
+Sensor nodes collect soil data and send it to a central hub using ESP-NOW. The hub then forwards that data securely to the backend, where it’s processed and displayed to the user in real time.
+
+![diagram]
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
@@ -112,8 +120,6 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -198,12 +204,6 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-### Top contributors:
-
-<a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
-</a>
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -220,9 +220,7 @@ Distributed under the Unlicense License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Contact me! [Here](https://github.com/caleb-ellefson)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -261,6 +259,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/caleb-ellefson
 [product-screenshot]: client/src/assets/main.png
+[diagram]: client/src/assets/Diagram.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
