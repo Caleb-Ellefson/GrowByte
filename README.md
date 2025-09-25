@@ -91,8 +91,8 @@ replicating the usability of a real consumer product.
 
 
 The goals of this project:
-* Make connecting to wifi dynamaic. The user shouldn't have to be a programmer to setup the project.
-* Security. All devices posting data to the server need to have a token. No open endpoints.
+* Make connecting to devices dynamaic. The user shouldn't have to be a programmer to setup the project.
+* Security. All devices making requests to the server need to have a token. No open endpoints.
 * System Design needs to be scaleable. Mutiple users with mutiple devices.
 * End to end solution: full stack solution to allow each user to configure and see their data.
 
@@ -102,7 +102,6 @@ it to a backend server, where it’s processed and displayed through a web appli
 This architecture combines firmware, backend services, and frontend visualization into a cohesive, 
 production-ready platform.
 
-Use the `BLANK_README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -112,14 +111,12 @@ Use the `BLANK_README.md` to get started.
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![MongoDB][mongo.js]][mongo-url]
+* [![Node.js][node.js]][node-url]
+* [![Express.js][express.js]][express-url]
+* [esp.js]
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -286,4 +283,11 @@ Use this space to list resources you find helpful and would like to give credit 
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[mongo.js]: https://img.shields.io/badge/MongoDb-Mongodb?style=for-the-badge&logo=mongodb&labelColor=black
+[mongo-url]:https://www.mongodb.com/
+[node.js]:https://img.shields.io/node/v/passport?style=for-the-badge
+[node-url]:https://nodejs.org/en
+[express.js]:https://img.shields.io/npm/l/express?style=for-the-badge&logo=express&label=express
+[express-url]:https://expressjs.com/
+[esp.js]:https://img.shields.io/badge/Espressif-black?style=flat-square&logo=Espressif&link=https%3A%2F%2Fwww.espressif.com%2Fen%2Fproducts%2Fsocs%2Fesp32-c6
+
