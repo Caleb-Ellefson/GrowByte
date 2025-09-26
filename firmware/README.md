@@ -6,4 +6,4 @@ This section will go more indepth about the firmware logic and structure for the
 
 
 
-[state-diagram]: client/src/assets/State-Diagram.png
+[state-diagram]: client/src/assets/Hub-Diagram.png
