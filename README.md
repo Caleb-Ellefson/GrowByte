@@ -103,9 +103,7 @@ Sensor nodes collect soil data and sends it to a central hub using ESP-NOW. The 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
+I highly reccomend checking out the live project <a href="">here.</a> Setting up the project locally may be somewhat involved. 
 
 ### Installation
 
