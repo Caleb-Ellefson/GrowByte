@@ -46,7 +46,7 @@ This directory contains the firmware for the GrowByte system, designed to run on
 1. **Dependencies:**  
    - PlatformIO or Arduino IDE  
    - ESP32 board support  
-   - Required libraries: `esp_now`, `WiFi`, `QRCode`, `WebServer` and 'HTTP'
+   - Required libraries: `esp_now`, `WiFi`, `QRCode`, `WebServer` and `HTTP`
 
 2. **Build Steps:**  
    - Clone this repository.
